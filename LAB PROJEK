@@ -125,3 +125,95 @@ void list_tools() {
             tools[i].quantity); // Jumlah unit
     }
 }
+
+// Fitur admin: tambah alat
+void add_tool() {  // menambahkan alat baru
+    Tool t;  // deklarasi variabel alat
+    printf("Masukkan ID alat: ");  // input ID alat
+    scanf("%u", &t.id);  // baca ID alat
+    printf("Nama alat: ");  // input nama alat
+    scanf(" %[^\n]", t.name);  // baca nama alat
+    printf("Merek: ");  // input merek alat
+    scanf(" %[^\n]", t.brand);  // baca merek alat
+    printf("Model: ");  // input model alat
+    scanf(" %[^\n]", t.model);  // baca model alat
+    printf("Tahun produksi: ");  // input tahun produksi alat
+    scanf("%u", &t.year);  // baca tahun produksi alat
+    printf("Jumlah unit: ");  // input jumlah unit alat
+    scanf("%u", &t.quantity);  // baca jumlah unit alat
+    tools[total_tools++] = t;  // tambahkan alat ke array
+    save_tools();  // simpan data alat ke file
+    printf("Alat berhasil ditambahkan.\n");  // konfirmasi penambahan alat
+}
+
+// Fitur admin: hapus alat
+void delete_tool() {  // menghapus alat berdasarkan ID
+    unsigned int id;  // deklarasi variabel ID
+    printf("Masukkan ID alat yang ingin dihapus: ");  // input ID alat
+    scanf("%u", &id);  // baca ID alat
+    for (int i = 0; i < total_tools; i++) {  // loop melalui semua alat
+        if (tools[i].id == id) {  // jika ID alat cocok
+            for (int j = i; j < total_tools - 1; j++) {  // geser alat setelahnya ke kiri
+                tools[j] = tools[j + 1];  // geser alat
+            }
+            total_tools--;  // kurangi total alat
+            save_tools();  // simpan data alat ke file
+            printf("Alat berhasil dihapus.\n");  // konfirmasi penghapusan alat
+            return;  // keluar dari fungsi
+        }
+    }
+    printf("ID alat tidak ditemukan.\n");  // jika ID alat tidak ditemukan
+}
+
+// Fitur admin: edit alat
+void edit_tool() {  // mengedit data alat berdasarkan ID
+    unsigned int id;  // deklarasi variabel ID
+    printf("Masukkan ID alat yang ingin diedit: ");  // input ID alat
+    scanf("%u", &id);  // baca ID alat
+    for (int i = 0; i < total_tools; i++) {  // loop melalui semua alat
+        if (tools[i].id == id) {  // jika ID alat cocok
+            printf("Edit Nama (current: %s): ", tools[i].name);  // input nama baru
+            scanf(" %[^\n]", tools[i].name);  // baca nama baru
+            printf("Edit Merek (current: %s): ", tools[i].brand);  // input merek baru
+            scanf(" %[^\n]", tools[i].brand);  // baca merek baru
+            printf("Edit Model (current: %s): ", tools[i].model);  // input model baru
+            scanf(" %[^\n]", tools[i].model);  // baca model baru
+            printf("Edit Tahun (current: %u): ", tools[i].year);  // input tahun baru
+            scanf("%u", &tools[i].year);  // baca tahun baru
+            printf("Edit Jumlah (current: %u): ", tools[i].quantity);  // input jumlah baru
+            scanf("%u", &tools[i].quantity);  // baca jumlah baru
+            save_tools();  // simpan data alat ke file
+            printf("Data alat berhasil diubah.\n");  // konfirmasi pengubahan data alat
+            return;  // keluar dari fungsi
+        }
+    }
+    printf("ID alat tidak ditemukan.\n");  // jika ID alat tidak ditemukan
+}
+
+// Fungsi user: lihat alat tersedia
+void user_view_tools() {  // menampilkan alat yang tersedia untuk user
+    list_tools();  // panggil fungsi list_tools untuk menampilkan alat
+}
+
+// Fungsi user: pinjam alat
+void borrow_tool() {  // meminjam alat berdasarkan ID
+    unsigned int id, jumlah;  // deklarasi variabel ID dan jumlah
+    printf("Masukkan ID alat yang ingin dipinjam: ");  // input ID alat
+    scanf("%u", &id);  // baca ID alat
+    printf("Jumlah yang ingin dipinjam: ");  // input jumlah alat
+    scanf("%u", &jumlah);  // baca jumlah alat
+    for (int i = 0; i < total_tools; i++) {
+        if (tools[i].id == id) {
+            if (tools[i].quantity >= jumlah) {
+                tools[i].quantity -= jumlah;
+                save_tools();  // simpan data alat ke file
+                printf("Alat berhasil dipinjam.\n");  // konfirmasi peminjaman alat
+                return;  // keluar dari fungsi
+            } else {
+                printf("Jumlah alat tidak cukup.\n");  // jika jumlah alat tidak cukup
+                return;  // keluar dari fungsi
+            }
+        }
+    }
+    printf("ID alat tidak ditemukan.\n");
+}
