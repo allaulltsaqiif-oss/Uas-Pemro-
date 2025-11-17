@@ -1,4 +1,127 @@
+// Mengimpor library stdio.h untuk fungsi input/output seperti printf() dan scanf()
 #include <stdio.h>
+// Mengimpor library stdlib.h untuk fungsi umum seperti malloc() dan free()
 #include <stdlib.h>
-include <string.h>
+// Mengimpor library string.h untuk fungsi manipulasi string seperti strcmp()
+#include <string.h>
 
+
+#define MAX_STRING 50 // Mendefinisikan konstanta MAX_STRING dengan nilai 50 untuk ukuran maksimal string
+#define MAX_TOOLS 100 // Mendefinisikan konstanta MAX_TOOLS dengan nilai 100 untuk ukuran maksimal array alat
+
+// Struktur data untuk alat laboratorium
+typedef struct {
+    unsigned int id;
+    char name[MAX_STRING]; // Nama alat
+    char brand[MAX_STRING]; // Merek alat
+    char model[MAX_STRING]; // Model alat
+    unsigned int year; // Tahun produksi
+    unsigned int quantity; // Jumlah unit tersedia
+} Tool; // Struktur data untuk alat laboratorium
+
+// Struktur data untuk akun pengguna
+typedef struct {
+    char username[MAX_STRING]; // Nama pengguna
+    char password[MAX_STRING]; // Kata sandi pengguna
+    char role[MAX_STRING]; // "admin" atau "user"
+} Account;
+
+// Global array alat dan akun
+Tool tools[MAX_TOOLS]; // Array untuk menyimpan alat
+int total_tools = 0; // Jumlah total alat
+Account accounts[10]; // Array untuk menyimpan akun
+int total_accounts = 0; // Jumlah total akun
+
+// Fungsi untuk membaca data akun dari file
+void load_accounts() {
+    FILE *fp = fopen("accounts.txt", "r");// Membuka file accounts.txt untuk dibaca
+    if (!fp) {// Jika file gagal dibuka
+        printf("Gagal membuka file accounts.txt\n");// Menampilkan pesan kesalahan
+        return;// Menghentikan eksekusi fungsi
+    }
+    total_accounts = 0; // Menginisialisasi jumlah akun menjadi 0
+    while (fscanf(fp, "%[^,],%[^,],%s\n", accounts[total_accounts].username, // Membaca username 
+                  accounts[total_accounts].password, // Membaca password
+                  accounts[total_accounts].role) == 3) { // Membaca role
+        total_accounts++;
+    }  // Menambah jumlah akun
+    fclose(fp); // Menutup file
+}
+
+// Fungsi untuk menyimpan data akun ke file
+void save_accounts() { // Membuka file accounts.txt untuk ditulis
+    FILE *fp = fopen("accounts.txt", "w"); // Membuka file accounts.txt untuk ditulis
+    if (!fp) { // Jika file gagal dibuka
+        printf("Gagal menyimpan file accounts.txt\n"); // Menampilkan pesan kesalahan
+        return; // Menghentikan eksekusi fungsi
+    }
+    for (int i = 0; i < total_accounts; i++) { // Iterasi melalui semua akun
+        fprintf(fp, "%s,%s,%s\n", accounts[i].username, accounts[i].password, accounts[i].role); // Menulis data akun ke file
+    }
+    fclose(fp); // Menutup file
+}
+
+// Fungsi untuk membaca data alat dari file
+void load_tools() {
+    FILE *fp = fopen("tools.txt", "r"); // Membuka file tools.txt untuk dibaca
+    if (!fp) { // Jika file gagal dibuka
+        printf("Gagal membuka file tools.txt\n");// Menampilkan pesan kesalahan
+        return;// Menghentikan eksekusi fungsi
+    }
+    total_tools = 0;
+    while (fscanf(fp, "%u,%[^,],%[^,],%[^,],%u,%u\n",// Membaca data alat dari file
+                  &tools[total_tools].id, // Membaca ID alat
+                  tools[total_tools].name, // Nama alat
+                  tools[total_tools].brand,// Membaca merek alat
+                  tools[total_tools].model, // Membaca model alat
+                  &tools[total_tools].year,// Membaca tahun produksi
+                  &tools[total_tools].quantity) == 6) { // Membaca jumlah unit
+        total_tools++;// Menambah jumlah alat
+    }
+    fclose(fp);// Menutup file
+}
+
+// Fungsi untuk menyimpan data alat ke file
+void save_tools() { // Membuka file tools.txt untuk ditulis
+    FILE *fp = fopen("tools.txt", "w");// Membuka file tools.txt untuk ditulis
+    if (!fp) {// Jika file gagal dibuka
+        printf("Gagal menyimpan file tools.txt\n");// Menampilkan pesan kesalahan
+        return;   // Menghentikan eksekusi fungsi
+    }
+    for (int i = 0; i < total_tools; i++) {// Iterasi melalui semua alat
+        fprintf(fp, "%u,%s,%s,%s,%u,%u\n", // Menulis data alat ke file
+                tools[i].id, // ID alat
+                tools[i].name, // Nama alat
+                tools[i].brand, // Merek alat
+                tools[i].model, // Model alat
+                tools[i].year, // Tahun produksi
+                tools[i].quantity); // Jumlah unit
+    }
+    fclose(fp); // Menutup file
+}
+
+// Fungsi login
+Account* login(char *username, char *password) { // Iterasi melalui semua akun
+    for (int i = 0; i < total_accounts; i++) { // Memeriksa kecocokan username dan password
+        if (strcmp(accounts[i].username, username) == 0 && strcmp(accounts[i].password, password) == 0) {// Jika ditemukan kecocokan
+            return &accounts[i];// Mengembalikan pointer ke akun yang sesuai
+        }
+    }
+    return NULL; // Mengembalikan NULL jika tidak ditemukan kecocokan
+}
+
+// Fungsi menampilkan daftar alat
+void list_tools() {
+    printf("Daftar Alat Laboratorium:\n");// Menampilkan header tabel
+    printf("%-5s %-20s %-15s %-15s %-6s %-8s\n", "ID", "Nama", "Merek", "Model", "Tahun", "Jumlah");// Menampilkan judul kolom
+    printf("-------------------------------------------------------------------------------\n"); // Garis pemisah
+    for (int i = 0; i < total_tools; i++) { // Iterasi melalui semua alat
+        printf("%-5u %-20s %-15s %-15s %-6u %-8u\n", // Menampilkan data alat
+            tools[i].id, // ID alat
+            tools[i].name, // Nama alat
+            tools[i].brand, // Merek alat
+            tools[i].model, // Model alat
+            tools[i].year, // Tahun produksi
+            tools[i].quantity); // Jumlah unit
+    }
+}
