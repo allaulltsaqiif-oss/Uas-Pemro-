@@ -127,175 +127,191 @@ void list_tools() {
 }
 
 // Fitur admin: tambah alat
-void add_tool() {  // menambahkan alat baru
-    Tool t;  // deklarasi variabel alat
-    printf("Masukkan ID alat: ");  // input ID alat
-    scanf("%u", &t.id);  // baca ID alat
-    printf("Nama alat: ");  // input nama alat
-    scanf(" %[^\n]", t.name);  // baca nama alat
-    printf("Merek: ");  // input merek alat
-    scanf(" %[^\n]", t.brand);  // baca merek alat
-    printf("Model: ");  // input model alat
-    scanf(" %[^\n]", t.model);  // baca model alat
-    printf("Tahun produksi: ");  // input tahun produksi alat
-    scanf("%u", &t.year);  // baca tahun produksi alat
-    printf("Jumlah unit: ");  // input jumlah unit alat
-    scanf("%u", &t.quantity);  // baca jumlah unit alat
-    tools[total_tools++] = t;  // tambahkan alat ke array
-    save_tools();  // simpan data alat ke file
-    printf("Alat berhasil ditambahkan.\n");  // konfirmasi penambahan alat
+void add_tool() {// menambahkan alat baru
+    Tool t;// Deklarasi variabel alat baru
+    printf("Masukkan ID alat: ");// input ID alat
+    scanf("%u", &t.id);// baca ID alat
+    printf("Nama alat: "); //
+    scanf(" %[^\n]", t.name);
+    printf("Merek: ");
+    scanf(" %[^\n]", t.brand);
+    printf("Model: ");
+    scanf(" %[^\n]", t.model);
+    printf("Tahun produksi: ");
+    scanf("%u", &t.year);
+    printf("Jumlah unit: ");
+    scanf("%u", &t.quantity);
+    tools[total_tools++] = t;
+    save_tools();
+    printf("Alat berhasil ditambahkan.\n"); //
 }
 
 // Fitur admin: hapus alat
-void delete_tool() {  // menghapus alat berdasarkan ID
-    unsigned int id;  // deklarasi variabel ID
-    printf("Masukkan ID alat yang ingin dihapus: ");  // input ID alat
-    scanf("%u", &id);  // baca ID alat
-    for (int i = 0; i < total_tools; i++) {  // loop melalui semua alat
-        if (tools[i].id == id) {  // jika ID alat cocok
-            for (int j = i; j < total_tools - 1; j++) {  // geser alat setelahnya ke kiri
-                tools[j] = tools[j + 1];  // geser alat
+void delete_tool() {
+    unsigned int id;
+    printf("Masukkan ID alat yang ingin dihapus: ");
+    scanf("%u", &id);
+    for (int i = 0; i < total_tools; i++) {
+        if (tools[i].id == id) {
+            for (int j = i; j < total_tools - 1; j++) {
+                tools[j] = tools[j + 1];
             }
-            total_tools--;  // kurangi total alat
-            save_tools();  // simpan data alat ke file
-            printf("Alat berhasil dihapus.\n");  // konfirmasi penghapusan alat
-            return;  // keluar dari fungsi
+            total_tools--;
+            save_tools();
+            printf("Alat berhasil dihapus.\n");
+            return;
         }
     }
-    printf("ID alat tidak ditemukan.\n");  // jika ID alat tidak ditemukan
+    printf("ID alat tidak ditemukan.\n");
 }
 
 // Fitur admin: edit alat
-void edit_tool() {  // mengedit data alat berdasarkan ID
-    unsigned int id;  // deklarasi variabel ID
-    printf("Masukkan ID alat yang ingin diedit: ");  // input ID alat
-    scanf("%u", &id);  // baca ID alat
-    for (int i = 0; i < total_tools; i++) {  // loop melalui semua alat
-        if (tools[i].id == id) {  // jika ID alat cocok
-            printf("Edit Nama (current: %s): ", tools[i].name);  // input nama baru
-            scanf(" %[^\n]", tools[i].name);  // baca nama baru
-            printf("Edit Merek (current: %s): ", tools[i].brand);  // input merek baru
-            scanf(" %[^\n]", tools[i].brand);  // baca merek baru
-            printf("Edit Model (current: %s): ", tools[i].model);  // input model baru
-            scanf(" %[^\n]", tools[i].model);  // baca model baru
-            printf("Edit Tahun (current: %u): ", tools[i].year);  // input tahun baru
-            scanf("%u", &tools[i].year);  // baca tahun baru
-            printf("Edit Jumlah (current: %u): ", tools[i].quantity);  // input jumlah baru
-            scanf("%u", &tools[i].quantity);  // baca jumlah baru
-            save_tools();  // simpan data alat ke file
-            printf("Data alat berhasil diubah.\n");  // konfirmasi pengubahan data alat
-            return;  // keluar dari fungsi
+void edit_tool() {
+    unsigned int id;
+    printf("Masukkan ID alat yang ingin diedit: ");
+    scanf("%u", &id);
+    for (int i = 0; i < total_tools; i++) {
+        if (tools[i].id == id) {
+            printf("Edit Nama (current: %s): ", tools[i].name);
+            scanf(" %[^\n]", tools[i].name);
+            printf("Edit Merek (current: %s): ", tools[i].brand);
+            scanf(" %[^\n]", tools[i].brand);
+            printf("Edit Model (current: %s): ", tools[i].model);
+            scanf(" %[^\n]", tools[i].model);
+            printf("Edit Tahun (current: %u): ", tools[i].year);
+            scanf("%u", &tools[i].year);
+            printf("Edit Jumlah (current: %u): ", tools[i].quantity);
+            scanf("%u", &tools[i].quantity);
+            save_tools();
+            printf("Data alat berhasil diubah.\n");
+            return;
         }
     }
-    printf("ID alat tidak ditemukan.\n");  // jika ID alat tidak ditemukan
+    printf("ID alat tidak ditemukan.\n");
 }
 
 // Fungsi user: lihat alat tersedia
-void user_view_tools() {  // menampilkan alat yang tersedia untuk user
-    list_tools();  // panggil fungsi list_tools untuk menampilkan alat
+void user_view_tools() {
+    list_tools();
 }
 
 // Fungsi user: pinjam alat
-void borrow_tool() {  // meminjam alat berdasarkan ID
-    unsigned int id, jumlah;  // deklarasi variabel ID dan jumlah
-    printf("Masukkan ID alat yang ingin dipinjam: ");  // input ID alat
-    scanf("%u", &id);  // baca ID alat
-    printf("Jumlah yang ingin dipinjam: ");  // input jumlah alat
-    scanf("%u", &jumlah);  // baca jumlah alat
+void borrow_tool() {
+    unsigned int id, jumlah;
+    printf("Masukkan ID alat yang ingin dipinjam: ");
+    scanf("%u", &id);
+    printf("Jumlah yang ingin dipinjam: ");
+    scanf("%u", &jumlah);
     for (int i = 0; i < total_tools; i++) {
         if (tools[i].id == id) {
             if (tools[i].quantity >= jumlah) {
                 tools[i].quantity -= jumlah;
-                save_tools();  // simpan data alat ke file
-                printf("Alat berhasil dipinjam.\n");  // konfirmasi peminjaman alat
-                return;  // keluar dari fungsi
+                save_tools();
+                printf("Alat berhasil dipinjam.\n");
+                return;
             } else {
-                printf("Jumlah alat tidak cukup.\n");  // jika jumlah alat tidak cukup
-                return;  // keluar dari fungsi
+                printf("Jumlah alat tidak cukup.\n");
+                return;
             }
         }
     }
     printf("ID alat tidak ditemukan.\n");
 }
 
-int main(int argc, char *argv[]) {  
-    if (argc != 3) {  // Memastikan program dijalankan dengan 2 argumen tambahan  (username dan password). Jika tidak, tampilkan cara pemakaian dan keluar (return 1).
+// Fungsi user: kembalikan alat
+void return_tool() {
+    unsigned int id, jumlah;
+    printf("Masukkan ID alat yang dikembalikan: ");
+    scanf("%u", &id);
+    printf("Jumlah yang dikembalikan: ");
+    scanf("%u", &jumlah);
+    for (int i = 0; i < total_tools; i++) {
+        if (tools[i].id == id) {
+            tools[i].quantity += jumlah;
+            save_tools();
+            printf("Alat berhasil dikembalikan.\n");
+            return;
+        }
+    }
+    printf("ID alat tidak ditemukan.\n");
+}
+
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
         printf("Usage: %s <username> <password>\n", argv[0]);
         return 1;
     }
 
-    load_accounts(); // Membaca file accounts.txt dan tools.txt ke memori
-    load_tools(); // Membaca file accounts.txt dan tools.txt ke memori
+    load_accounts();
+    load_tools();
 
-    Account *current_user = login(argv[1], argv[2]); // Memanggil fungsi login dengan username = argv[1] dan password = argv[2]; mengembalikan pointer ke Account jika cocok.
-    if (!current_user) {  // Jika login gagal, tampilkan pesan dan keluar.
-        printf("Login gagal!\n"); 
+    Account *current_user = login(argv[1], argv[2]);
+    if (!current_user) {
+        printf("Login gagal!\n");
         return 1;
     }
 
-    printf("Selamat datang, %s (%s)\n", current_user->username, current_user->role); // Menyapa pengguna yang berhasil login.
+    printf("Selamat datang, %s (%s)\n", current_user->username, current_user->role);
 
-    int exit = 0; // Variabel untuk mengontrol loop menu
-    int choice; // Variabel untuk menyimpan pilihan menu pengguna
-    while (!exit) {  // Loop menu utama
-        if (strcmp(current_user->role, "admin") == 0) {  // Jika pengguna adalah admin
-            printf("\n=== Menu Admin ===\n"); // Menampilkan menu untuk admin
-            printf("1. Lihat alat\n");  // Menampilkan daftar alat
-            printf("2. Tambah alat\n");  // Menambahkan alat baru
-            printf("3. Hapus alat\n");  // Menghapus alat yang ada
-            printf("4. Ubah alat\n");  // Mengubah data alat
-            printf("5. Keluar\n");  // Keluar dari program
-            printf("Pilih: ");  // Meminta input pilihan menu dari pengguna
-            scanf("%d", &choice); 
+    int exit = 0;
+    int choice;
+
+    while (!exit) {
+        if (strcmp(current_user->role, "admin") == 0) {
+            printf("\n=== Menu Admin ===\n");
+            printf("1. Lihat alat\n");
+            printf("2. Tambah alat\n");
+            printf("3. Hapus alat\n");
+            printf("4. Ubah alat\n");
+            printf("5. Keluar\n");
+            printf("Pilih: ");
+            scanf("%d", &choice);
             switch (choice) {
                 case 1:
-                    list_tools();  // Menampilkan daftar alat
+                    list_tools();
                     break;
                 case 2:
-                    add_tool();  // Menambahkan alat baru
+                    add_tool();
                     break;
                 case 3:
-                    delete_tool();  // Menghapus alat yang ada
+                    delete_tool();
                     break;
                 case 4:
-                    edit_tool();  // Mengubah data alat
+                    edit_tool();
                     break;
                 case 5:
                     exit = 1;
                     break;
                 default:
-                    printf("Pilihan tidak valid.\n"); // Menangani pilihan yang tidak valid
+                    printf("Pilihan tidak valid.\n");
             }
-        } else { // user   // Jika pengguna adalah user biasa
-            printf("\n=== Menu User ===\n"); // Menampilkan menu untuk user
-            printf("1. Lihat alat\n");  // Menampilkan daftar alat
-            printf("2. Pinjam alat\n");  // Meminjam alat
-            printf("3. Kembalikan alat\n");  // Mengembalikan alat
-            printf("4. Keluar\n");  // Keluar dari program
+        } else { // user
+            printf("\n=== Menu User ===\n");
+            printf("1. Lihat alat\n");
+            printf("2. Pinjam alat\n");
+            printf("3. Kembalikan alat\n");
+            printf("4. Keluar\n");
             printf("Pilih: ");
             scanf("%d", &choice);
             switch (choice) {
                 case 1:
-                    list_tools();  // Menampilkan daftar alat
+                    list_tools();
                     break;
                 case 2:
-                    borrow_tool(); // Meminjam alat
+                    borrow_tool();
                     break;
                 case 3:
-                    return_tool(); // Mengembalikan alat
+                    return_tool();
                     break;
                 case 4:
-                    exit = 1;  // Keluar dari program
+                    exit = 1;
                     break;
                 default:
-                    printf("Pilihan tidak valid.\n"); // Menangani pilihan yang tidak valid
+                    printf("Pilihan tidak valid.\n");
             }
         }
     }
 
-    printf("Terima kasih telah menggunakan sistem.\n"); // Menyampaikan ucapan terima kasih saat keluar dari program
-    return 0; 
-}
-    printf("Terima kasih telah menggunakan sistem.\n"); 
-    return 0; 
+    printf("Terima kasih telah menggunakan sistem.\n");
+    return 0;
 }
