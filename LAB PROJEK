@@ -189,3 +189,99 @@ void edit_tool() {// Mengedit data alat
     }
     printf("ID alat tidak ditemukan.\n");// Menampilkan pesan jika ID alat tidak ditemukan
 }
+
+// Fungsi user: lihat alat tersedia
+void user_view_tools() {// Menampilkan daftar alat
+    list_tools();// Memanggil fungsi list_tools untuk menampilkan alat
+}
+
+// Fungsi user: pinjam alat
+void borrow_tool() {// Meminjam alat
+    unsigned int id, jumlah;// Deklarasi variabel ID alat dan jumlah yang dipinjam
+    printf("Masukkan ID alat yang ingin dipinjam: ");// Input ID alat yang akan dipinjam
+    scanf("%u", &id);// Membaca ID alat
+    printf("Jumlah yang ingin dipinjam: ");// Input jumlah yang akan dipinjam
+    scanf("%u", &jumlah);// Membaca jumlah yang akan dipinjam
+    for (int i = 0; i < total_tools; i++) {// Iterasi melalui semua alat
+        if (tools[i].id == id) {// Jika ID alat ditemukan
+            if (tools[i].quantity >= jumlah) {// Jika jumlah alat cukup
+                tools[i].quantity -= jumlah;// Mengurangi jumlah alat yang tersedia
+                save_tools();// Menyimpan perubahan ke file
+                printf("Alat berhasil dipinjam.\n");// Menampilkan pesan sukses
+                return; // Menghentikan eksekusi fungsi
+            } else {// Jika jumlah alat tidak cukup
+                printf("Jumlah alat tidak cukup.\n");// Menampilkan pesan kesalahan
+                return;// Menghentikan eksekusi fungsi
+            }
+        }
+    }
+    printf("ID alat tidak ditemukan.\n"); // Menampilkan pesan jika ID alat tidak ditemukan
+}
+
+// Fungsi user: kembalikan alat
+void return_tool() {// Mengembalikan alat
+    unsigned int id, jumlah;// Deklarasi variabel ID alat dan jumlah yang dikembalikan
+    printf("Masukkan ID alat yang dikembalikan: ");//  input ID alat yang akan dikembalikan
+    scanf("%u", &id);// Membaca ID alat/
+    printf("Jumlah yang dikembalikan: ");// Input jumlah yang dikembalikan
+    scanf("%u", &jumlah); // Membaca jumlah yang dikembalikan
+    for (int i = 0; i < total_tools; i++) {// Iterasi melalui semua alat
+        if (tools[i].id == id) {// Jika ID alat ditemukan
+            tools[i].quantity += jumlah;// Menambahkan jumlah alat yang dikembalikan
+            save_tools();// Menyimpan perubahan ke file
+            printf("Alat berhasil dikembalikan.\n");// Menampilkan pesan sukses
+            return;// Menghentikan eksekusi fungsi
+        }
+    }
+    printf("ID alat tidak ditemukan.\n");// Menampilkan pesan jika ID alat tidak ditemukan
+}
+
+int main(int argc, char *argv[]) {// Fungsi utama program
+    if (argc != 3) {// Memeriksa argumen baris perintah
+        printf("Usage: %s <username> <password>\n", argv[0]);// Menampilkan cara penggunaan program
+        return 1;// Menghentikan eksekusi program
+    }
+
+    load_accounts();// Memuat data akun dari file
+    load_tools();// Memuat data alat dari file
+
+    Account *current_user = login(argv[1], argv[2]);// Melakukan login dengan username dan password dari argumen
+    if (!current_user) {// Jika login gagal
+        printf("Login gagal!\n");// Menampilkan pesan gagal
+        return 1;// Menghentikan eksekusi program
+    }
+
+    printf("Selamat datang, %s (%s)\n", current_user->username, current_user->role);// Menampilkan pesan selamat datang
+
+    int exit = 0;// Variabel untuk mengontrol keluar dari menu
+    int choice;// Variabel untuk menyimpan pilihan menu
+
+    while (!exit) {// Loop utama menu
+        if (strcmp(current_user->role, "admin") == 0) {// admin
+            printf("\n=== Menu Admin ===\n");// Menampilkan menu admin
+            printf("1. Lihat alat\n");// Opsi lihat alat
+            printf("2. Tambah alat\n");// Opsi tambah alat
+            printf("3. Hapus alat\n");// Opsi hapus alat
+            printf("4. Ubah alat\n");// Opsi ubah alat
+            printf("5. Keluar\n");// Opsi keluar
+            printf("Pilih: ");// Meminta input pilihan
+            scanf("%d", &choice);// Membaca pilihan
+            switch (choice) {// Menangani pilihan menu
+                case 1:// Lihat alat
+                    list_tools();// Memanggil fungsi list_tools
+                    break;
+                case 2:// Tambah alat
+                    add_tool();// Memanggil fungsi tambah alat
+                    break;
+                case 3:// Hapus alat
+                    delete_tool();// Memanggil fungsi hapus alat
+                    break;
+                case 4:// Ubah alat
+                    edit_tool();// Memanggil fungsi ubah alat
+                    break;// Menangani pilihan menu
+                case 5:// Keluar
+                    exit = 1;// Mengatur variabel exit untuk keluar dari menu
+                    break;// Menangani pilihan menu
+                default://
+                    printf("Pilihan tidak valid.\n");// Menampilkan pesan jika pilihan tidak valid
+            }
