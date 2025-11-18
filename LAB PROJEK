@@ -217,3 +217,83 @@ void borrow_tool() {  // meminjam alat berdasarkan ID
     }
     printf("ID alat tidak ditemukan.\n");
 }
+
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
+        printf("Usage: %s <username> <password>\n", argv[0]);
+        return 1;
+    }
+
+    load_accounts();
+    load_tools();
+
+    Account *current_user = login(argv[1], argv[2]);
+    if (!current_user) {
+        printf("Login gagal!\n");
+        return 1;
+    }
+
+    printf("Selamat datang, %s (%s)\n", current_user->username, current_user->role);
+
+    int exit = 0;
+    int choice;
+
+    while (!exit) { 
+        if (strcmp(current_user->role, "admin") == 0) {
+            printf("\n=== Menu Admin ===\n");
+            printf("1. Lihat alat\n");
+            printf("2. Tambah alat\n");
+            printf("3. Hapus alat\n");
+            printf("4. Ubah alat\n");
+            printf("5. Keluar\n");
+            printf("Pilih: ");
+            scanf("%d", &choice);
+            switch (choice) {
+                case 1:
+                    list_tools();
+                    break;
+                case 2:
+                    add_tool();
+                    break;
+                case 3:
+                    delete_tool();
+                    break;
+                case 4:
+                    edit_tool();
+                    break;
+                case 5:
+                    exit = 1;
+                    break;
+                default:
+                    printf("Pilihan tidak valid.\n");
+            }
+        } else { // user  
+            printf("\n=== Menu User ===\n");
+            printf("1. Lihat alat\n");
+            printf("2. Pinjam alat\n");
+            printf("3. Kembalikan alat\n");
+            printf("4. Keluar\n");
+            printf("Pilih: ");
+            scanf("%d", &choice);
+            switch (choice) {
+                case 1:
+                    list_tools();
+                    break;
+                case 2:
+                    borrow_tool();
+                    break;
+                case 3:
+                    return_tool(); 
+                    break;
+                case 4:
+                    exit = 1;
+                    break;
+                default:
+                    printf("Pilihan tidak valid.\n");
+            }
+        }
+    }
+
+    printf("Terima kasih telah menggunakan sistem.\n"); 
+    return 0; 
+}
