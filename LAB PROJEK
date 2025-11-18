@@ -218,82 +218,84 @@ void borrow_tool() {  // meminjam alat berdasarkan ID
     printf("ID alat tidak ditemukan.\n");
 }
 
-int main(int argc, char *argv[]) {
-    if (argc != 3) {
+int main(int argc, char *argv[]) {  
+    if (argc != 3) {  // Memastikan program dijalankan dengan 2 argumen tambahan  (username dan password). Jika tidak, tampilkan cara pemakaian dan keluar (return 1).
         printf("Usage: %s <username> <password>\n", argv[0]);
         return 1;
     }
 
-    load_accounts();
-    load_tools();
+    load_accounts(); // Membaca file accounts.txt dan tools.txt ke memori
+    load_tools(); // Membaca file accounts.txt dan tools.txt ke memori
 
-    Account *current_user = login(argv[1], argv[2]);
-    if (!current_user) {
-        printf("Login gagal!\n");
+    Account *current_user = login(argv[1], argv[2]); // Memanggil fungsi login dengan username = argv[1] dan password = argv[2]; mengembalikan pointer ke Account jika cocok.
+    if (!current_user) {  // Jika login gagal, tampilkan pesan dan keluar.
+        printf("Login gagal!\n"); 
         return 1;
     }
 
-    printf("Selamat datang, %s (%s)\n", current_user->username, current_user->role);
+    printf("Selamat datang, %s (%s)\n", current_user->username, current_user->role); // Menyapa pengguna yang berhasil login.
 
-    int exit = 0;
-    int choice;
-
-    while (!exit) { 
-        if (strcmp(current_user->role, "admin") == 0) {
-            printf("\n=== Menu Admin ===\n");
-            printf("1. Lihat alat\n");
-            printf("2. Tambah alat\n");
-            printf("3. Hapus alat\n");
-            printf("4. Ubah alat\n");
-            printf("5. Keluar\n");
-            printf("Pilih: ");
-            scanf("%d", &choice);
+    int exit = 0; // Variabel untuk mengontrol loop menu
+    int choice; // Variabel untuk menyimpan pilihan menu pengguna
+    while (!exit) {  // Loop menu utama
+        if (strcmp(current_user->role, "admin") == 0) {  // Jika pengguna adalah admin
+            printf("\n=== Menu Admin ===\n"); // Menampilkan menu untuk admin
+            printf("1. Lihat alat\n");  // Menampilkan daftar alat
+            printf("2. Tambah alat\n");  // Menambahkan alat baru
+            printf("3. Hapus alat\n");  // Menghapus alat yang ada
+            printf("4. Ubah alat\n");  // Mengubah data alat
+            printf("5. Keluar\n");  // Keluar dari program
+            printf("Pilih: ");  // Meminta input pilihan menu dari pengguna
+            scanf("%d", &choice); 
             switch (choice) {
                 case 1:
-                    list_tools();
+                    list_tools();  // Menampilkan daftar alat
                     break;
                 case 2:
-                    add_tool();
+                    add_tool();  // Menambahkan alat baru
                     break;
                 case 3:
-                    delete_tool();
+                    delete_tool();  // Menghapus alat yang ada
                     break;
                 case 4:
-                    edit_tool();
+                    edit_tool();  // Mengubah data alat
                     break;
                 case 5:
                     exit = 1;
                     break;
                 default:
-                    printf("Pilihan tidak valid.\n");
+                    printf("Pilihan tidak valid.\n"); // Menangani pilihan yang tidak valid
             }
-        } else { // user  
-            printf("\n=== Menu User ===\n");
-            printf("1. Lihat alat\n");
-            printf("2. Pinjam alat\n");
-            printf("3. Kembalikan alat\n");
-            printf("4. Keluar\n");
+        } else { // user   // Jika pengguna adalah user biasa
+            printf("\n=== Menu User ===\n"); // Menampilkan menu untuk user
+            printf("1. Lihat alat\n");  // Menampilkan daftar alat
+            printf("2. Pinjam alat\n");  // Meminjam alat
+            printf("3. Kembalikan alat\n");  // Mengembalikan alat
+            printf("4. Keluar\n");  // Keluar dari program
             printf("Pilih: ");
             scanf("%d", &choice);
             switch (choice) {
                 case 1:
-                    list_tools();
+                    list_tools();  // Menampilkan daftar alat
                     break;
                 case 2:
-                    borrow_tool();
+                    borrow_tool(); // Meminjam alat
                     break;
                 case 3:
-                    return_tool(); 
+                    return_tool(); // Mengembalikan alat
                     break;
                 case 4:
-                    exit = 1;
+                    exit = 1;  // Keluar dari program
                     break;
                 default:
-                    printf("Pilihan tidak valid.\n");
+                    printf("Pilihan tidak valid.\n"); // Menangani pilihan yang tidak valid
             }
         }
     }
 
+    printf("Terima kasih telah menggunakan sistem.\n"); // Menyampaikan ucapan terima kasih saat keluar dari program
+    return 0; 
+}
     printf("Terima kasih telah menggunakan sistem.\n"); 
     return 0; 
 }
