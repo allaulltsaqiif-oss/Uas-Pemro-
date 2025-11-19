@@ -285,3 +285,33 @@ int main(int argc, char *argv[]) {// Fungsi utama program
                 default://
                     printf("Pilihan tidak valid.\n");// Menampilkan pesan jika pilihan tidak valid
             }
+} else { // user
+            printf("\n=== Menu User ===\n");// Menampilkan menu user
+            printf("1. Lihat alat\n");// Opsi lihat alat
+            printf("2. Pinjam alat\n");// Opsi pinjam alat
+            printf("3. Kembalikan alat\n");// 
+            printf("4. Keluar\n");// Opsi keluar
+            printf("Pilih: ");// Meminta input pilihan
+            scanf("%d", &choice);// Membaca pilihan
+            switch (choice) {// Menangani pilihan menu
+                case 1://   Lihat alat
+                    list_tools();// Memanggil fungsi list_tools
+                    break;// Menangani pilihan menu/
+                case 2:// Pinjam alat
+                    borrow_tool();// Memanggil fungsi pinjam alat
+                    break;// Menangani pilihan menu/
+                case 3:// Kembalikan alat
+                    return_tool();// Memanggil fungsi kembalikan alat
+                    break;// Menangani pilihan menu
+                case 4:// Keluar
+                    exit = 1;// Mengatur variabel exit untuk keluar dari menu
+                    break;// Menangani pilihan menu
+                default:// Jika pilihan tidak valid
+                    printf("Pilihan tidak valid.\n");// Menampilkan pesan jika pilihan tidak valid
+            }
+        }
+    }
+
+    printf("Terima kasih telah menggunakan sistem.\n"); // Menampilkan pesan terima kasih
+    return 0;// Menghentikan eksekusi program
+}
