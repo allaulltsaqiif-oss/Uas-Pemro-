@@ -7,8 +7,17 @@ anggota:
       npm: "2208107010078"
     - nama: "Cut Zahiera Aiva"
       npm: "250810701100020"
-    - nama: ""
-      npm: "NPM"
+    - nama: "Al Aul Tsaqif"
+      npm: "250810701100034"
+    - nama: "Muhammad Farras Munawwir"
+      npm: "250810701100104"
+    - nama: "Syella Zikra Arifa"
+      npm: "250810701100014"
+    - nama: "Najla Putri Syahnuza"
+      npm: "250810701100115"
+    - nama: "Muhammad Rayyan"
+      npm: "250810701100113"
+    
       
 ---
 
