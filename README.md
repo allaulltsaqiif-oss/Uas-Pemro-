@@ -3,11 +3,11 @@
 
 👥 Anggota Kelompok
 anggota:
-    - nama: "Nama 1"
-      npm: "NPM"
-    - nama: "Nama 2"
-      npm: "NPM"
-    - nama: "Nama 3"
+    - nama: "Iwani Khaira"
+      npm: "2208107010078"
+    - nama: "Cut Zahiera Aiva"
+      npm: "250810701100020"
+    - nama: ""
       npm: "NPM"
       
 ---
