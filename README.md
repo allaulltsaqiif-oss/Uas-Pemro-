@@ -32,6 +32,46 @@ anggota:
       Semua akun disimpan di file .txt.
       User harus login terlebih dahulu untuk bisa mengakses sistem.
 
+    🧰 Fitur Utama Program
+
+    1. Fitur Admin
+    
+    - Menambah data alat
+    - Mengedit data alat
+    - Menghapus alat yang sudah tidak digunakan
+    - Melihat daftar semua alat
+    - Mengelola status alat (tersedia / dipinjam) 
+
+    2. Fitur User
+
+  User dapat:
+    - Melihat alat yang tersedia
+    - Melakukan peminjaman alat
+    - Mengembalikan alat
+    - Melihat riwayat peminjaman (jika fitur ini diaktifkan dalam implementasi kelompok)
+    - Semua proses peminjaman dan pengembalian dicatat dalam file.
+
+🗂️ Penyimpanan Data
+
+  Program menggunakan beberapa file .txt, seperti:
+    - akun.txt → daftar admin & user
+    - alat.txt → data alat dan statusnya
+    - peminjaman.txt → riwayat peminjaman
+    - Program memanfaatkan:
+    - fopen, fprintf, fscanf, fgets
+    - Looping untuk membaca file baris demi baris
+    - Struct untuk menyimpan data alat & user secara sementara
+
+💡 Nilai Pembelajaran
+
+  Dari proyek ini, mahasiswa memahami konsep penting dalam pemrograman C, seperti:
+    - File handling
+    - Struktur data (struct)
+    - Control flow
+    - Menu interaktif CLI
+    - Implementasi CRUD
+    - Logika validasi input
+    
 🧾 Kesimpulan Project
     Sistem Peminjaman Alat Laboratorium ini menawarkan solusi sederhana dan efektif untuk mengelola alat lab dalam bentuk aplikasi CLI menggunakan bahasa C. Dengan memanfaatkan file .txt sebagai penyimpanan data, sistem dapat tetap  berjalan tanpa database. Proyek ini memperkuat pemahaman mahasiswa mengenai file handling, struktur data, logika program, dan implementasi CRUD pada bahasa C.
  
