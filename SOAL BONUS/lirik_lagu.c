@@ -15,21 +15,22 @@ void bersihkan_kata(char *src, char *dst) {
     }
     dst[j] = '\0';      //tempat kumpul karakter -sampai stop
 }
-// Cek apakah kata sudah ada
+
+// Cek apakah kata sudah pernah muncul / belum 
 int sudah_ada(char kata[][MAX_WORD_LEN], int count, char *baru) {
     for (int i = 0; i < count; i++) {
-        if (strcmp(kata[i], baru) == 0) return 1;
+        if (strcmp(kata[i], baru) == 0) return 1;   //membandingkan kata ke-i dengan kata baru
     }
-    return 0;
+    return 0;       //kata belum ada
 }
 
 int main() {
-    FILE *fin = fopen("lirik.txt", "r");
-    FILE *fout = fopen("kosa-kata.word", "w");
+    FILE *fin = fopen("lirik.txt", "r");        //membuka file lirik.txt, read
+    FILE *fout = fopen("kosa-kata.word", "w");  //membuka/membuat file kosa-kata.word, write
 
-    if (!fin || !fout) {
+    if (!fin || !fout) {        //kosong/NULL, file tidak terbuka
         printf("Gagal membuka file.\n");
-        return 1;
+        return 1;       //program berhenti karena error
     }
 
     char line[1000];
