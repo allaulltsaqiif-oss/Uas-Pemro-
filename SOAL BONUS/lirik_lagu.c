@@ -1,21 +1,20 @@
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
+#include <stdio.h>  //standar Input dan Output
+#include <ctype.h>  //fungsi digunakan untuk memeriksa dan memanipulasi karakter
+#include <string.h> //fungsi untuk memproses string dan array karakter
 
-#define MAX_WORDS 5000
-#define MAX_WORD_LEN 100
+#define MAX_WORDS 5000  //define digunakan utk membuat konstanta MAX_WORDS yg bernilai 5000
+#define MAX_WORD_LEN 100    //menentukan panjang maksimal sebuah kata
 
 // Membersihkan kata: hanya huruf, angka, dan apostrophe
 void bersihkan_kata(char *src, char *dst) {
-    int j = 0;
-    for (int i = 0; src[i] != '\0'; i++) {
-        if (isalnum(src[i]) || src[i] == '\'') {
-            dst[j++] = tolower(src[i]);
+    int j = 0;      //variabel utk menyimpan angka input
+    for (int i = 0; src[i] != '\0'; i++) {   //perulangan dari huruf pertama di src sampai '\0'(END)
+        if (isalnum(src[i]) || src[i] == '\'') {    //isalnum = utk mengecek karakter adalah huruf/angka, tanda kutip (')
+            dst[j++] = tolower(src[i]);     //tolower = utk mengubah huruf menjadi huruf kecil
         }
     }
-    dst[j] = '\0';
+    dst[j] = '\0';      //tempat kumpul karakter -sampai stop
 }
-
 // Cek apakah kata sudah ada
 int sudah_ada(char kata[][MAX_WORD_LEN], int count, char *baru) {
     for (int i = 0; i < count; i++) {
