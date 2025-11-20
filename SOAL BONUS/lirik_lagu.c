@@ -35,8 +35,7 @@ int main() {
 
     char line[1000];        //tempat penyimpanan utk 1 baris teks, max 1000 karakter
     char words[MAX_WORDS][MAX_WORD_LEN];    //menyimpan semua kata yg ditemukan
-    int word_count = 0;
-
+    int word_count = 0;     //penghitung jumlah angka yg masuk ke array
     // --- Ambil judul (baris pertama) ---
     fgets(line, sizeof(line), fin);
     fprintf(fout, "%s", line);   // tulis judul apa adanya
