@@ -24,7 +24,7 @@ int sudah_ada(char kata[][MAX_WORD_LEN], int count, char *baru) {
     return 0;       //kata belum ada
 }
 
-
+int main() {
     FILE *fin = fopen("lirik.txt", "r");        //membuka file lirik.txt, read
     FILE *fout = fopen("kosa-kata.word", "w");  //membuka/membuat file kosa-kata.word, write
 
