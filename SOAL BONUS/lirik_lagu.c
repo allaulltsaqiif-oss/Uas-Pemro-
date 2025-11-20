@@ -33,7 +33,7 @@ int main() {
         return 1;       //program berhenti karena error
     }
 
-    char line[1000];
+    char line[1000];        //tempat penyimpanan utk 1 baris teks, max 1000 karakter
     char words[MAX_WORDS][MAX_WORD_LEN];
     int word_count = 0;
 
