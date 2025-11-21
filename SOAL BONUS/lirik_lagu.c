@@ -38,35 +38,34 @@ int main() {
     int word_count = 0;     //penghitung jumlah angka yg masuk ke array
     
     // --- Ambil judul (baris pertama) ---
-    fgets(line, sizeof(line), fin);
-    fprintf(fout, "%s", line);   // tulis judul apa adanya
+   fgets(line, sizeof(line), fin);                               // Membaca baris pertama dari file input (judul lagu)
+fprintf(fout, "%s", line);                                    // Menulis judul lagu ke file output tanpa perubahan
 
-    // --- Proses sisa lirik ---
-    while (fgets(line, sizeof(line), fin)) {
-        char *token = strtok(line, " \n\t");
+// --- Proses sisa lirik ---
+while (fgets(line, sizeof(line), fin)) {                      // Loop membaca setiap baris lirik dari file input
+    char *token = strtok(line, " \n\t");                      // Memecah baris menjadi token menggunakan spasi, newline, tab sebagai delimiter
 
-        while (token != NULL) {
-            char cleaned[MAX_WORD_LEN] = "";
-            bersihkan_kata(token, cleaned);
+    while (token != NULL) {                                   // Loop memproses setiap token dalam baris
+        char cleaned[MAX_WORD_LEN] = "";                      // Deklarasi array untuk menyimpan kata yang sudah dibersihkan
+        bersihkan_kata(token, cleaned);                       // Memanggil fungsi untuk membersihkan kata dari karakter khusus
 
-            if (strlen(cleaned) > 0 && !sudah_ada(words, word_count, cleaned)) {
-                strcpy(words[word_count], cleaned);
-                word_count++;
-            }
-
-            token = strtok(NULL, " \n\t");
+        if (strlen(cleaned) > 0 && !sudah_ada(words, word_count, cleaned)) {  // Cek jika kata tidak kosong dan belum ada di array
+            strcpy(words[word_count], cleaned);               // Menyalin kata yang sudah dibersihkan ke array words
+            word_count++;                                      // Menambah counter jumlah kata unik
         }
+
+        token = strtok(NULL, " \n\t");                        // Mengambil token berikutnya dari baris yang sama
     }
-
-    // --- Tulis ke file output ---
-    for (int i = 0; i < word_count; i++) {
-        fprintf(fout, "%s=\n", words[i]);
-    }
-
-    fclose(fin);
-    fclose(fout);
-
-    printf("File 'kosa-kata.word' berhasil dibuat!\n");
-    return 0;
 }
 
+// --- Tulis ke file output ---
+for (int i = 0; i < word_count; i++) {                       // Loop melalui semua kata unik yang telah dikumpulkan
+    fprintf(fout, "%s=\n", words[i]);                        // Menulis setiap kata ke file output dengan format "kata="
+}
+
+fclose(fin);                                                  // Menutup file input
+fclose(fout);                                                 // Menutup file output
+
+printf("File 'kosa-kata.word' berhasil dibuat!\n");          // Menampilkan pesan sukses ke user
+
+return 0;                                                     // Mengembalikan nilai 0 menandakan program berakhir dengan sukses
